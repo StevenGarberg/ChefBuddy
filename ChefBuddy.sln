@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChefBuddy.Models", "ChefBud
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChefBuddy.API", "ChefBuddy.API\ChefBuddy.API.csproj", "{FEB32287-B55A-4DA9-B798-8D3378B1DF8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChefBuddy.App", "ChefBuddy.App\ChefBuddy.App.csproj", "{30B52E86-2E36-4C69-BE01-83E8F0DF232A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{FEB32287-B55A-4DA9-B798-8D3378B1DF8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEB32287-B55A-4DA9-B798-8D3378B1DF8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEB32287-B55A-4DA9-B798-8D3378B1DF8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30B52E86-2E36-4C69-BE01-83E8F0DF232A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30B52E86-2E36-4C69-BE01-83E8F0DF232A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30B52E86-2E36-4C69-BE01-83E8F0DF232A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30B52E86-2E36-4C69-BE01-83E8F0DF232A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
