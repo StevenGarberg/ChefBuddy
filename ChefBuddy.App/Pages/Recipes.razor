@@ -1,0 +1,54 @@
+﻿@page "/recipes"
+@using ChefBuddy.Models
+@using Microsoft.AspNetCore.Components
+
+<RadzenDialog />
+<RadzenNotification />
+
+<PageTitle>Recipes</PageTitle>
+
+<h1>Recipes</h1>
+
+@if (loadFailed)
+{
+    <h1>ERROR</h1>
+    <h3>@exception.Message</h3>
+    <p>@exception.StackTrace</p>
+}
+else if (recipes == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Log Recipe" Click="@Create" ButtonStyle="ButtonStyle.Info" />
+    <RadzenGrid @ref="grid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Advanced"
+                AllowPaging="true" PageSize="10" AllowSorting="true" Data="@recipes" TItem="Recipe">
+        <Columns>
+            <RadzenGridColumn TItem="Recipe" Property="Id" Title="Id"/>
+            <RadzenGridColumn TItem="Recipe" Property="Name" Title="Name"/>
+            <RadzenGridColumn TItem="Recipe" Property="Description" Title="Description"/>
+            <RadzenGridColumn TItem="Recipe" Title="Steps" Sortable="false" Filterable="true">
+                <Template Context="data">
+                    @if (data.Steps?.Any() ?? false)
+                    {
+                        <ol>
+                            @foreach (var exercise in data.Steps)
+                            {
+                                <li>@exercise.Name</li>
+                            }
+                        </ol>   
+                    }
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Recipe" Title="Actions" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenButton Icon="mode_edit" style="margin-bottom: 10px" Click="@(_ => Edit(data.Id))" ButtonStyle="ButtonStyle.Secondary"/>
+                    <RadzenButton Icon="delete" style="margin-bottom: 10px" Click="@(_ => Delete(data.Id))" ButtonStyle="ButtonStyle.Danger"/>
+                </Template>
+            </RadzenGridColumn>
+        </Columns>
+    </RadzenGrid>
+}
