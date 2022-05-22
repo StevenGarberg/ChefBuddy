@@ -57,8 +57,8 @@ else
                 <hr/>
                 @if (recipe.Steps?.Any() ?? false)
                 {
-                    var exerciseCount = recipe.Steps.Count;
-                    for (var i = 0; i < exerciseCount; i++)
+                    var stepCount = recipe.Steps.Count;
+                    for (var i = 0; i < stepCount; i++)
                     {
                         var index = i;
                         var step = recipe.Steps[i];
@@ -69,7 +69,7 @@ else
                                     <RadzenLabel Text="Name"/>
                                 </div>
                                 <div class="col-md-8">
-                                    <RadzenTextBox style="width: 100%;" TextProperty="Name" Change=@(args => UpdateName(args, step)) />
+                                    <RadzenTextBox style="width: 100%;" TextProperty="Name" @bind-Value="step.Name" Change=@(args => UpdateName(args, step)) />
                                 </div>
                             </div>
                             <div class="row">
@@ -82,7 +82,7 @@ else
                             </div>
                             <br/>
                             <RadzenButton ButtonType="ButtonType.Button" Icon="delete" Text="Remove Step" Click="async () => { await RemoveStep(step); }" ButtonStyle="ButtonStyle.Danger"/>
-                            @if (i != exerciseCount - 1)
+                            @if (i != stepCount - 1)
                             {
                                 <RadzenButton ButtonType="ButtonType.Button" Icon="arrow_downward" Text="Move Down" Click="() => { MoveDown(index, recipe.Steps); }" ButtonStyle="ButtonStyle.Info"/>
                             }
@@ -98,6 +98,13 @@ else
                 <div class="row">
                     <div class="col-md-12">
                         <RadzenButton ButtonType="ButtonType.Button" Icon="create" Text="Add Step" Click="() => { AddStep(); }" ButtonStyle="ButtonStyle.Secondary"/>
+                    </div>
+                </div>
+                <br/><br/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Info"/>
+                        <RadzenButton ButtonType="ButtonType.Reset" Icon="cancel" Text="Cancel" Click="Cancel" ButtonStyle="ButtonStyle.Danger"/>
                     </div>
                 </div>
             </div>
