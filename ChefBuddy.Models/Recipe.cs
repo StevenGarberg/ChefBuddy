@@ -6,6 +6,10 @@ namespace ChefBuddy.Models
 {
     public class Recipe : BaseResource
     {
+        public string Name { get; set; }
+        
+        public string Description { get; set; }
+        
         public List<Step> Steps { get; set; } = new List<Step>();
         
         [JsonIgnore]
