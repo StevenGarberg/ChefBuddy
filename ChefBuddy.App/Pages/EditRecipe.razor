@@ -55,13 +55,13 @@ else
                     </div>
                 </fieldset>
                 <hr/>
-                @if (recipe.Steps?.Any() ?? false)
+                @if (recipe.StepsViewModel?.Any() ?? false)
                 {
-                    var stepCount = recipe.Steps.Count;
+                    var stepCount = recipe.StepsViewModel.Count;
                     for (var i = 0; i < stepCount; i++)
                     {
                         var index = i;
-                        var step = recipe.Steps[i];
+                        var step = recipe.StepsViewModel[i];
                         <fieldset>
                             <h2>Step #@(i+1) - @step.Name</h2>
                             <div class="row">
@@ -84,11 +84,11 @@ else
                             <RadzenButton ButtonType="ButtonType.Button" Icon="delete" Text="Remove Step" Click="async () => { await RemoveStep(step); }" ButtonStyle="ButtonStyle.Danger"/>
                             @if (i != stepCount - 1)
                             {
-                                <RadzenButton ButtonType="ButtonType.Button" Icon="arrow_downward" Text="Move Down" Click="() => { MoveDown(index, recipe.Steps); }" ButtonStyle="ButtonStyle.Info"/>
+                                <RadzenButton ButtonType="ButtonType.Button" Icon="arrow_downward" Text="Move Down" Click="() => { MoveDown(index, recipe.StepsViewModel); }" ButtonStyle="ButtonStyle.Info"/>
                             }
                             @if (i != 0)
                             {
-                                <RadzenButton ButtonType="ButtonType.Button" Icon="arrow_upward" Text="Move Up" Click="() => { MoveUp(index, recipe.Steps); }" ButtonStyle="ButtonStyle.Info"/>
+                                <RadzenButton ButtonType="ButtonType.Button" Icon="arrow_upward" Text="Move Up" Click="() => { MoveUp(index, recipe.StepsViewModel); }" ButtonStyle="ButtonStyle.Info"/>
                             }
                         </fieldset>
                         <hr/>

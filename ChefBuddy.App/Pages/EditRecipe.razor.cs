@@ -1,4 +1,5 @@
-﻿using ChefBuddy.App.Services;
+﻿using AutoMapper;
+using ChefBuddy.App.Services;
 using ChefBuddy.Models;
 using Microsoft.AspNetCore.Components;
 using Radzen;
@@ -11,11 +12,12 @@ public partial class EditRecipe
     [Inject] private DialogService  DialogService  { get; set; }
     [Inject] private NotificationService NotificationService { get; set; }
     [Inject] private RecipeService RecipeService { get; set; }
+    [Inject] private IMapper Mapper { get; set; }
 
     [Parameter] public string Id { get; set; }
 
     private string userId;
-    private Recipe recipe;
+    private RecipeViewModel recipe;
 
     private bool loadFailed = false;
     private Exception exception;
@@ -30,15 +32,16 @@ public partial class EditRecipe
         {
             if (Id != null)
             {
-                recipe = await RecipeService.GetById(Id);
-                if (recipe == null)
+                var recipeEntity = await RecipeService.GetById(Id);
+                if (recipeEntity == null)
                 {
                     NavigationManager.NavigateTo("/workouts");
                 }
+                recipe = Mapper.Map<RecipeViewModel>(recipeEntity);
             }
             else
             {
-                recipe = new Recipe
+                recipe = new RecipeViewModel
                 {
                     OwnerId = userId
                 };
@@ -56,11 +59,11 @@ public partial class EditRecipe
     {
         if (Id != null)
         {
-            recipe = await RecipeService.Update(Id, recipe);   
+            recipe = Mapper.Map<RecipeViewModel>(await RecipeService.Update(Id, recipe));
         }
         else
         {
-            recipe = await RecipeService.CreateAsync(userId, recipe);   
+            recipe = Mapper.Map<RecipeViewModel>(await RecipeService.CreateAsync(userId, recipe));   
         }
 
         NavigationManager.NavigateTo("/recipes");
@@ -73,16 +76,16 @@ public partial class EditRecipe
     
     private void AddStep()
     {
-        var step = new Step();
-        recipe.Steps.Add(step);
+        var step = new StepViewModel();
+        recipe.StepsViewModel.Add(step);
     }
     
-    private async Task RemoveStep(Step step)
+    private async Task RemoveStep(StepViewModel step)
     {
         var confirmed = await DialogService.Confirm("Are you sure?", "Delete Step",
             new ConfirmOptions {OkButtonText = "Yes", CancelButtonText = "No"});
             
-        recipe.Steps.Remove(step);
+        recipe.StepsViewModel.Remove(step);
             
         NotificationService.Notify(new NotificationMessage
         {
@@ -90,7 +93,7 @@ public partial class EditRecipe
         });
     }
     
-    private void MoveDown(int index, List<Step> steps)
+    private void MoveDown<TStep>(int index, List<TStep> steps) where TStep : Step
     {
         var exercise = steps[index];
         var tempExercise = steps[index + 1];
@@ -99,7 +102,7 @@ public partial class EditRecipe
 
     }
 
-    private void MoveUp(int index, List<Step> steps)
+    private void MoveUp<TStep>(int index, List<TStep> steps) where TStep : Step
     {
         var exercise = steps[index];
         var tempExercise = steps[index - 1];
