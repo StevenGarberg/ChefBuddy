@@ -25,6 +25,8 @@ builder.Services.AddScoped<IMongoClient, MongoClient>(_ =>
 builder.Services.AddSingleton<IMapper, Mapper>(_ =>
     new Mapper(new MapperConfiguration(cfg =>
     {
+        cfg.CreateMap<Step, StepViewModel>();
+        cfg.CreateMap<StepViewModel, Step>();
         cfg.CreateMap<Recipe, RecipeViewModel>()
             .ForMember(x => x.StepsViewModel,
             x => x.MapFrom(src => src.Steps));
